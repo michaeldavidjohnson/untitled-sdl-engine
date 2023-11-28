@@ -34,7 +34,7 @@ impl WindowContext {
         //change the window to have openGL backend, presumably we also need
         //to get the openGL context.
         if use_open_gl {
-            let window = video_subsystem
+            window = video_subsystem
                 .window(&window_title, window_width.clone(), window_height.clone())
                 .position_centered()
                 .opengl()
@@ -42,7 +42,7 @@ impl WindowContext {
                 .build()
                 .unwrap();
         } else {
-            let window = video_subsystem
+            window = video_subsystem
                 .window(&window_title, window_width.clone(), window_height.clone())
                 .position_centered()
                 .resizable()
@@ -50,12 +50,6 @@ impl WindowContext {
                 .unwrap();
         }
 
-        let window = video_subsystem
-            .window(&window_title, window_width.clone(), window_height.clone())
-            .position_centered()
-            .resizable()
-            .build()
-            .unwrap();
         let canvas = window.into_canvas().build().unwrap();
 
         match font_path {

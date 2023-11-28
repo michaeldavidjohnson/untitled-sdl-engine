@@ -20,7 +20,7 @@ fn main() {
         "Adjustable Box".to_string(),
         800,
         600,
-        false,
+        true,
     );
 
     // Generate random colors for each square
