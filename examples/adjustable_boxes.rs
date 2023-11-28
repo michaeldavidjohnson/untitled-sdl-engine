@@ -15,17 +15,12 @@ const GRID_COLS: i32 = 60;
 
 fn main() {
     // Initialize SDL2
-    let mut window_context = untitled_sdl_engine::render::window_context::WindowContext::new(
-        None,
-        "Adjustable Box".to_string(),
-        800,
-        600,
-        true,
-    );
+    let mut window_context =
+        window_context::WindowContext::new(None, "Adjustable Box".to_string(), 800, 600, true);
 
     // Generate random colors for each square
-    let colors: Vec<Color> = (0..GRID_ROWS * GRID_COLS)
-        .map(|_| Color::RGB(random_color(), random_color(), random_color()))
+    let colours: Vec<Color> = (0..GRID_ROWS * GRID_COLS)
+        .map(|_| Color::RGB(random_colour(), random_colour(), random_colour()))
         .collect();
 
     // Main loop
@@ -44,8 +39,8 @@ fn main() {
         // Clear the screen
         window_context.clear();
 
-        // Draw the dynamic grid of colored squares
-        draw_dynamic_grid(&mut window_context.canvas, &colors);
+        // Draw the dynamic grid of coloured squares
+        draw_dynamic_grid(&mut window_context.canvas, &colours);
 
         // Present the canvas
         window_context.present();
@@ -55,7 +50,7 @@ fn main() {
     }
 }
 
-fn draw_dynamic_grid(canvas: &mut Canvas<Window>, colors: &[Color]) {
+fn draw_dynamic_grid(canvas: &mut Canvas<Window>, colours: &[Color]) {
     // Get the dimensions of the window
     let (window_width, window_height) = canvas.output_size().unwrap();
 
@@ -65,15 +60,15 @@ fn draw_dynamic_grid(canvas: &mut Canvas<Window>, colors: &[Color]) {
 
     for row in 0..GRID_ROWS {
         for col in 0..GRID_COLS {
-            // Get the color for the current square
-            let color = colors[(row * GRID_COLS + col) as usize];
+            // Get the colour for the current square
+            let colour = colours[(row * GRID_COLS + col) as usize];
 
             // Calculate square position
             let x = col as i32 * square_width;
             let y = row as i32 * square_height;
 
             // Draw the square
-            canvas.set_draw_color(color);
+            canvas.set_draw_color(colour);
             canvas
                 .fill_rect(Rect::new(x, y, square_width as u32, square_height as u32))
                 .unwrap();
@@ -81,6 +76,6 @@ fn draw_dynamic_grid(canvas: &mut Canvas<Window>, colors: &[Color]) {
     }
 }
 
-fn random_color() -> u8 {
+fn random_colour() -> u8 {
     rand::thread_rng().gen_range(0..255)
 }

@@ -1,4 +1,3 @@
-use gl;
 use sdl2::event::Event;
 use sdl2::pixels::Color;
 use sdl2::rect::Rect;
@@ -15,6 +14,7 @@ pub struct WindowContext {
     pub ttf_context: Sdl2TtfContext,
     pub canvas: Canvas<Window>,
     pub event_pump: EventPump,
+
     font_path: Option<String>,
 }
 
@@ -26,19 +26,20 @@ impl WindowContext {
         window_height: u32,
         use_open_gl: bool,
     ) -> Self {
-        let sdd_context = sdl2::init().unwrap();
-        let video_subsystem = sdd_context.video().unwrap();
+        let sdl_context = sdl2::init().unwrap();
+        let video_subsystem = sdl_context.video().unwrap();
         let ttf_context = sdl2::ttf::init().unwrap();
-        let event_pump = sdd_context.event_pump().unwrap();
+        let event_pump = sdl_context.event_pump().unwrap();
         let window: Window;
+
         //change the window to have openGL backend, presumably we also need
         //to get the openGL context.
         if use_open_gl {
             window = video_subsystem
                 .window(&window_title, window_width.clone(), window_height.clone())
                 .position_centered()
-                .opengl()
                 .resizable()
+                .opengl()
                 .build()
                 .unwrap();
         } else {
@@ -52,32 +53,19 @@ impl WindowContext {
 
         let canvas = window.into_canvas().build().unwrap();
 
-        match font_path {
-            Some(font) => {
-                return WindowContext {
-                    sdl_context: sdd_context,
-                    window_title: window_title,
-                    window_height: window_height,
-                    window_width: window_width,
-                    event_pump: event_pump,
-                    canvas: canvas,
-                    ttf_context: ttf_context,
-                    font_path: Some(font.to_string()),
-                }
-            }
-            None => {
-                return WindowContext {
-                    sdl_context: sdd_context,
-                    window_title: window_title,
-                    window_height: window_height,
-                    window_width: window_width,
-                    event_pump: event_pump,
-                    canvas: canvas,
-                    ttf_context: ttf_context,
-                    font_path: None,
-                }
-            }
-        }
+        return WindowContext {
+            sdl_context,
+            window_title,
+            window_height,
+            window_width,
+            event_pump,
+            canvas,
+            ttf_context,
+            font_path: match font_path {
+                Some(font) => Some(font.to_string()),
+                None => None,
+            },
+        };
     }
 
     pub fn render_text(&mut self, text: &str, x: i32, y: i32) {
