@@ -15,3 +15,7 @@ features = ["ttf"]
 [[example]]
 name = "adjustable_box"
 path = "./examples/adjustable_boxes.rs"
+
+[[example]]
+name = "random_boxes_and_text"
+path = "./examples/random_colour_text_over_random_boxes.rs"
