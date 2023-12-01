@@ -24,14 +24,6 @@ fn main() {
         true,
     );
 
-    // Generate random colors for each square
-    let colors: Vec<Color> = (0..GRID_ROWS * GRID_COLS)
-        .map(|_| Color::RGB(random_color(), random_color(), random_color()))
-        .collect();
-
-    // Generate random text for each square
-    let texts: Vec<String> = (0..GRID_ROWS * GRID_COLS).map(|_| random_text()).collect();
-
     // Main loop
     'running: loop {
         for event in window_context.poll_events() {
@@ -44,6 +36,14 @@ fn main() {
                 _ => {}
             }
         }
+
+        // Generate random colors for each square
+        let colors: Vec<Color> = (0..GRID_ROWS * GRID_COLS)
+            .map(|_| Color::RGB(random_color(), random_color(), random_color()))
+            .collect();
+
+        // Generate random text for each square
+        let texts: Vec<String> = (0..GRID_ROWS * GRID_COLS).map(|_| random_text()).collect();
 
         // Clear the screen
         window_context.clear();
@@ -63,7 +63,6 @@ fn main() {
         window_context.present();
 
         // Cap the frame rate
-        std::thread::sleep(std::time::Duration::new(0, 1_000_000_000u32 / 60));
     }
 }
 
